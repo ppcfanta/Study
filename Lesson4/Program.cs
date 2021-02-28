@@ -20,12 +20,20 @@ namespace Lesson4
 
             //Написать программу, принимающую на вход строку — набор чисел, разделенных пробелом, и возвращающую число — сумму всех чисел в строке. 
             //Ввести данные с клавиатуры и вывести результат на экран.
-            //Console.WriteLine("\nЗадание 2. Написать метод, принимающий набор чисел, разделенных пробелом, и возвращающий сумму всех чисел в строке.\n");
-            //ParseAndSum();
+            Console.WriteLine("\nЗадание 2. Написать метод, принимающий набор чисел, разделенных пробелом, и возвращающий сумму всех чисел в строке.\n");
+            ParseAndSum();
 
             Console.WriteLine("\nЗадание 3. Написать метод по определению времени года.\n");
             PrintSeasonByMonthNum();
+
+            Console.WriteLine("\nЗадание 4. Написать программу, вычисляющую число Фибоначчи для заданного значения рекурсивным способом.\n");
+            Console.Write("Введите порядковый номер числа Фибоначчи(больше 2): ");
+            int.TryParse(Console.ReadLine(), out int fiboSeqNum);
+            if (fiboSeqNum < 3) fiboSeqNum = 3;  // если ввели отрицательное число или число с порядковым номером меньше 3
+            Console.WriteLine($"Первые числа ряда Фибоначчи: 0, 1\nЧисло Фибоначчи с порядковым номером {fiboSeqNum} равно: {CalcFibo(0, 1, 3, fiboSeqNum)}"); 
         }
+
+
         
         /// <summary>
         /// Метод принимает имя, фамилию, отчество и возвращает ФИО одной строкой
@@ -169,6 +177,22 @@ namespace Lesson4
             Autumn
         }
 
+        /// <summary>
+        /// Метод возвращает сумму двух чисел(n2num+n1num) до тех пор, пока counter не сравняется с fiboNum
+        /// </summary>
+        /// <param name="n2num">n-2 число</param>
+        /// <param name="n1num">n-1 число</param>
+        /// <param name="counter">текущий счетчик номера числа Фибо</param>
+        /// <param name="fiboSecNum">финальный порядковый номер числа Фибо</param>
+        /// <returns>Сумма n2num+n1num</returns>
+        public static long CalcFibo(long n2num, long n1num, int counter, int fiboSecNum)
+        {
+            if (counter>=fiboSecNum) // если текущий счетчик равен(или больше) номера числа - выводим фисло Фибо и выдохим из рекурсии
+            {
+                return n2num + n1num;
+            }            
+            return CalcFibo(n1num, n2num + n1num, ++counter, fiboSecNum);
+        }
     }
 
 
