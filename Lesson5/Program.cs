@@ -7,11 +7,11 @@ namespace Lesson5
     {
         static void Main()
         {
-            //Console.WriteLine("Задание 1. Ввести с клавиатуры произвольный набор данных и сохранить его в текстовый файл.\n");
-            //FromKeyboardToTextfile();
+            Console.WriteLine("Задание 1. Ввести с клавиатуры произвольный набор данных и сохранить его в текстовый файл.\n");
+            FromKeyboardToTextfile();
 
-            //Console.WriteLine("Задание 2. Написать программу, которая при старте дописывает текущее время в файл «startup.txt».\n");
-            //WriteTimestampToFile();
+            Console.WriteLine("Задание 2. Написать программу, которая при старте дописывает текущее время в файл «startup.txt».\n");
+            WriteTimestampToFile();
 
             Console.WriteLine("Задание 3. Ввести с клавиатуры произвольный набор чисел (0...255) и записать их в бинарный файл.\n");
             FromKeyboardToBinfile();
