@@ -4,9 +4,100 @@ namespace Lesson7
 {
     class Program
     {
+        const char USER_DOT = 'x';
+        const char AI_DOT = 'o';
+        const int FIELD_SIZE = 3;
+        static char[,] _field = new char[FIELD_SIZE, FIELD_SIZE];
+        private static bool _gameOver;
+
         static void Main()
         {
-            Lottrey();
+            //Lottrey();
+
+            Cross();
+        }
+
+        private static void Cross()
+        {
+            InitField();
+            DrawField();
+
+            do
+            {
+                PlayerTurn();
+                DrawField();
+                CheckVictory();
+                AITurn();
+                DrawField();
+                CheckVictory();
+            } while (!_gameOver);
+
+        }
+
+        private static void CheckVictory()
+        {
+            //throw new NotImplementedException();
+        }
+
+        private static void AITurn()
+        {
+            do
+            {
+                int x = new Random().Next(1, FIELD_SIZE);
+                int y = new Random().Next(1, FIELD_SIZE);
+                //if (_field[y-1, x-1] == '.')
+                {
+                    _field[y-1, x-1] = AI_DOT;
+                    break;
+                }
+            } while (true);
+            
+            
+
+        }
+
+        private static void PlayerTurn()
+        {
+            
+            do
+            {
+                int y = GetIntFromConsole("Введите строку:", 1, FIELD_SIZE);
+                int x = GetIntFromConsole("Введите столбец:", 1, FIELD_SIZE);
+
+                if (_field[y - 1, x - 1]=='.')
+                {
+                    _field[y - 1, x - 1] = USER_DOT;
+                    break;
+                }
+
+                Console.WriteLine("Ячейка занята, выберите другую!");
+            } while (true);
+            
+        }
+
+        private static void DrawField()
+        {
+            Console.Clear();
+            for (int i = 0; i < _field.GetLength(1); i++)
+            {
+                Console.Write("|");
+                for (int j = 0; j < _field.GetLength(0); j++)
+                {
+                    Console.Write(_field[i,j]+"|");
+                }
+                Console.WriteLine("");
+            }
+        }
+
+        private static void InitField()
+        {
+            for (int i = 0; i < _field.GetLength(1); i++)
+            {
+                for (int j = 0; j < _field.GetLength(0); j++)
+                {
+                    _field[i, j] = '.';
+                }
+            }
         }
 
         private static void Lottrey()
