@@ -14,6 +14,19 @@ namespace Lesson4
             Console.WriteLine("\nДля запуска теста нажмите любую кнопку...");
             Console.ReadKey();
             BenchmarkRunner.Run<BenchTester>();
+
+
+            // Task 2. Бинарное дерево поиска
+            var tree = new BSearchTree();
+            tree.AddItem(50);
+            tree.AddItem(35);
+            tree.AddItem(70);
+            tree.AddItem(12);
+            tree.AddItem(40);
+            tree.AddItem(64);
+            tree.AddItem(82);
+            tree.PrintTree();
+
         }
 
         public static void SearchMeasurement()

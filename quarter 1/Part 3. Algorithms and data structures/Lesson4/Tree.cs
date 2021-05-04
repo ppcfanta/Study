@@ -43,6 +43,11 @@ namespace Lesson4
     class BSearchTree : ITree
     {
         private List<TreeNode> nodesList { get;  }
+
+        public BSearchTree()
+        {
+            nodesList = new List<TreeNode>();
+        }
         public void AddItem(int value)
         {
             if (nodesList.Count==0)
@@ -108,14 +113,75 @@ namespace Lesson4
             return null;    //на всякий случай, если по какой-то причине не найдем корень
         }
 
-        public void PrintTree()
+        public void PrintTree() 
         {
-            throw new NotImplementedException();        // ***************** ДОДЕЛАТЬ!! *****************
+            var treeStruct = TreeHelper.GetTreeInLine(this);
+            int posX = 50;
+            foreach (var node in treeStruct)
+            {
+                PrintNode(node.Node, posX, node.Depth);
+
+                if (node.Node.LeftChild != null)
+                    PrintNode(node.Node.LeftChild, posX - 15, node.Depth+1);
+                if (node.Node.RightChild != null)
+                    PrintNode(node.Node.RightChild, posX + 15, node.Depth+1);
+            }
+
+        }
+
+        private void PrintNode(TreeNode node, int cursorPos, int cursorY)
+        {
+            Console.SetCursorPosition(cursorPos, cursorY);
+            Console.WriteLine($"{node.Value}");
         }
 
         public void RemoveItem(int value)
         {
-            throw new NotImplementedException();        // ***************** ДОДЕЛАТЬ!! *****************
+            TreeNode nodeToDel = GetNodeByValue(value);
+            DelNode(nodeToDel);
+        }
+
+        private void DelNode(TreeNode nodeToDel)
+        {
+            if (nodeToDel.LeftChild == null && nodeToDel.RightChild == null)    // если у ноды нет потомков
+            {
+                DelMeFromParent(nodeToDel);
+                nodesList.Remove(nodeToDel);
+                nodeToDel = null;
+                return;     //  ветку перестраивать не нужно, выходим
+            }
+
+            var childNodeList = new List<TreeNode>();
+            AddChildNodes(ref childNodeList, nodeToDel);    // получаем список дочерних нод
+            foreach (var node in childNodeList)
+                nodesList.Remove(node);     // удаляем дочрние ноды из основного списка дерева
+
+            foreach (var node in childNodeList)
+                AddItem(node.Value);    // добавляем все дочерние ноды заново в дерево(с перестроением)
+
+            childNodeList.Clear();
+        }
+        
+        private void DelMeFromParent(TreeNode nodeToDel)
+        {
+            if (nodeToDel.Parent.LeftChild.Equals(nodeToDel))   // если удаляемая нода - левый потомок своего родителя
+                nodeToDel.LeftChild = null;
+            if (nodeToDel.Parent.RightChild.Equals(nodeToDel))  // если правый
+                nodeToDel.RightChild = null;
+        }
+        private void AddChildNodes(ref List<TreeNode> listOfChildren, TreeNode rootNode)
+        {
+            if (rootNode.LeftChild != null)
+            {
+                listOfChildren.Add(rootNode.LeftChild);
+                AddChildNodes(ref listOfChildren, rootNode.LeftChild);
+            }
+            if (rootNode.RightChild != null)
+            {
+                listOfChildren.Add(rootNode.RightChild);
+                AddChildNodes(ref listOfChildren, rootNode.RightChild);
+            }
+
         }
     }
 
