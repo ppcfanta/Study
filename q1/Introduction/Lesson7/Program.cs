@@ -1,4 +1,6 @@
-﻿int GetIntFromConsole(string msg)
+﻿using System.Data;
+
+int GetIntFromConsole(string msg)
 {
     Console.Write($"{msg}: ");
     return Convert.ToInt32(Console.ReadLine());
@@ -83,12 +85,53 @@ void Print2DArrayInt(int[,] arr, string msg = "", char sep = '\t')
     }
 }
 
+void PrintElementByPos(int[,] arr, int position)
+{
+    int rows = arr.GetLength(0), cols = arr.GetLength(1);
+    if (position > rows * cols)
+    {
+        Console.WriteLine("Элемента с такой позицией нету в этом массиве");
+    }
+    else
+    {
+        int counter = 0;
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                counter++;
+                if (position == counter)
+                {
+                    Console.WriteLine($"Элемент на позиции {position}: {arr[i, j]}");
+                }
+            }
+        }
+    }
+}
+
+void PrintColumnMean(int[,] arr)
+{
+    int rows = arr.GetLength(0), cols = arr.GetLength(1);
+
+    Console.WriteLine("Среднее арифметическое каждого столбца:");
+    for (int i = 0; i < cols; i++)
+    {
+        float columnSum = 0;
+        for (int j = 0; j < rows; j++)
+        {
+            columnSum += arr[j, i];
+        }
+
+        Console.Write($"{Math.Round(columnSum / rows, 1)}\t");
+    }
+}
+
 
 // Задача 47. Задайте двумерный массив размером m×n, заполненный случайными вещественными числами.
-// Console.WriteLine("\n============== Задача 47 ==============");
-// float[,] array = Create2DArrayFloat();
-// RandomFill2DArrayFloat(array, -10, 20);
-// Print2DArrayFloat(array, $"\nМассив {array.GetLength(0)}x{array.GetLength(1)} случайных вещественных чисел");
+Console.WriteLine("\n============== Задача 47 ==============");
+float[,] array = Create2DArrayFloat();
+RandomFill2DArrayFloat(array, -10, 20);
+Print2DArrayFloat(array, $"\nМассив {array.GetLength(0)}x{array.GetLength(1)} случайных вещественных чисел");
 
 
 // Задача 50. Напишите программу, которая на вход принимает позиции элемента в двумерном массиве,
@@ -98,16 +141,12 @@ int[,] array2 = Create2DArrayInt();
 RandomFill2DArrayInt(array2, 0, 30);
 Print2DArrayInt(array2, "Массив целых чисел");
 int numPos = GetIntFromConsole("Введите позицию элемента");
-if (numPos > array2.GetLength(0) * array2.GetLength(1))
-{
-    Console.WriteLine("Элемента с такой позицией нету в этом массиве");
-}
-else
-{
-    int numRow = numPos / array2.GetLength(1);
-    int numCol = (numPos % numRow == 0) ? numPos - (numPos / numRow)
+PrintElementByPos(array2, numPos);
 
-    int numCol = (numRow == 0) ? numPos - 1 : numPos % ((numRow + 1) * array2.GetLength(1)) - 1; // если первая строка
 
-    Console.WriteLine($"Элемент на позиции {numPos}: {array2[numRow, numCol]}");
-}
+// Задача 52. Задайте двумерный массив из целых чисел. Найдите среднее арифметическое элементов в каждом столбце.
+Console.WriteLine("\n============== Задача 52 ==============");
+int[,] array3 = Create2DArrayInt();
+RandomFill2DArrayInt(array3, 1, 10);
+Print2DArrayInt(array3, "Массив целых чисел");
+PrintColumnMean(array3);
