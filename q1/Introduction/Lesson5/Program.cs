@@ -30,7 +30,7 @@ int GetEvenCount(int[] arr)
 
     return evenCount;
 }
-
+    Math.Min(Array.GetLength(0))
 int GetSummOfOddElements(int[] arr) // считает сумму нечетных элементов
 {
     int oddSumm = 0;
